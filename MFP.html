@@ -31,8 +31,8 @@ if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 }
 
 function yesFunc() {
-	Money += (Math.floor(Math.random()*11));
-	Fame += (Math.floor(Math.random()*11));
+	Money += (Math.floor(Math.random()*16));
+	Fame += (Math.floor(Math.random()*22));
 	Power += (Math.floor(Math.random()*11));
 	Score += 1;
   document.getElementById("Money").innerHTML = "Money "+Money;
@@ -42,8 +42,8 @@ function yesFunc() {
   lossCheck();
 }
 function noFunc() {
-	Money -= (Math.floor(Math.random()*13));
-	Fame -= (Math.floor(Math.random()*13));
+	Money -= (Math.floor(Math.random()*21));
+	Fame -= (Math.floor(Math.random()*27));
 	Power -= (Math.floor(Math.random()*13));
 	Score += 1;
   document.getElementById("Money").innerHTML = "Money "+Money;
