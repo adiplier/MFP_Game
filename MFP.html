@@ -5,7 +5,7 @@
 <h1>MFP Game</h1>
 
 
-<p>Click Yes for a random increase and No for a random decrease. Youn lose if the values go beyond 0-100</p>
+<p>Click Yes for a random increase and No for a random decrease. You lose if the values go beyond 0-100</p>
 
 <button id="yesButton" onclick="yesFunc()">Yes</button>
 <button id="noButton" onclick="noFunc()">No</button>
@@ -20,6 +20,12 @@ var Money = 50;
 var Fame = 50;
 var Power = 50;
 var Score = 0;
+
+var mString = "Money";
+var fString = "Fame";
+var pString = "Power";
+var sString = "Score";
+
 function lossCheck(){
 if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 	document.getElementById("yesButton").disabled = 1
@@ -30,27 +36,28 @@ if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 	}
 }
 
+function valueUpdate(){
+	document.getElementById("Money").innerHTML = mString+" "+Money;
+	document.getElementById("Fame").innerHTML = fString+" "+Fame;
+	document.getElementById("Power").innerHTML = pString+" "+Power;
+	document.getElementById("Score").innerHTML = sString+" "+Score;
+}
+
 function yesFunc() {
 	Money += (Math.floor(Math.random()*16));
 	Fame += (Math.floor(Math.random()*22));
 	Power += (Math.floor(Math.random()*11));
 	Score += 1;
-  document.getElementById("Money").innerHTML = "Money "+Money;
-  document.getElementById("Fame").innerHTML = "Fame "+Fame;
-  document.getElementById("Power").innerHTML = "Power "+Power;
-  document.getElementById("Score").innerHTML = "Score "+Score;
-  lossCheck();
+	valueUpdate();
+	lossCheck();
 }
 function noFunc() {
 	Money -= (Math.floor(Math.random()*21));
 	Fame -= (Math.floor(Math.random()*27));
 	Power -= (Math.floor(Math.random()*13));
 	Score += 1;
-  document.getElementById("Money").innerHTML = "Money "+Money;
-  document.getElementById("Fame").innerHTML = "Fame "+Fame;
-  document.getElementById("Power").innerHTML = "Power "+Power;
-  document.getElementById("Score").innerHTML = "Score "+Score;
-  lossCheck();
+	valueUpdate();
+	lossCheck();
 }
 </script>
 
