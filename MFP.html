@@ -10,10 +10,10 @@
 <button id="yesButton" onclick="yesFunc()">Yes</button>
 <button id="noButton" onclick="noFunc()">No</button>
 
-<p id="Money">Money 50</p>
-<p id="Fame">Fame 50</p>
-<p id="Power">Power 50</p>
-<p id="Score">Score 0</p>
+<p id="Money"></p>
+<p id="Fame"></p>
+<p id="Power"></p>
+<p id="Score"></p>
 
 <script>
 var Money = 50;
@@ -26,6 +26,11 @@ var fString = "Fame";
 var pString = "Power";
 var sString = "Score";
 
+var audBruh = new Audio("https://www.myinstants.com/media/sounds/movie_1.mp3");
+var audClose = new Audio("https://www.myinstants.com/media/sounds/vine-boom.mp3");
+
+window.onload = randStart();
+
 function lossCheck(){
 if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 	document.getElementById("yesButton").disabled = 1
@@ -33,6 +38,13 @@ if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 	document.getElementById("Money").innerHTML = "Game";
 	document.getElementById("Fame").innerHTML = "Over ";
 	document.getElementById("Power").innerHTML = "Please Refresh Page ";
+	audBruh.play();
+	}
+}
+
+function closeCheck(){
+if(Money<=10 || Money>90 || Fame<=10 || Fame>90 || Power<=10 || Power>90){
+	audClose.play();
 	}
 }
 
@@ -49,6 +61,7 @@ function yesFunc() {
 	Power += (Math.floor(Math.random()*11));
 	Score += 1;
 	valueUpdate();
+	closeCheck();
 	lossCheck();
 }
 function noFunc() {
@@ -57,7 +70,14 @@ function noFunc() {
 	Power -= (Math.floor(Math.random()*13));
 	Score += 1;
 	valueUpdate();
+	closeCheck();
 	lossCheck();
+}
+function randStart(){
+	Money = (Math.floor(Math.random()*80)) + 5;
+	Fame = (Math.floor(Math.random()*80)) + 5;
+	Power = (Math.floor(Math.random()*80)) + 5;
+	valueUpdate();
 }
 </script>
 
