@@ -7,6 +7,27 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<style>
+      .healthbartext {
+        background-image: linear-gradient(to left, red, orange, yellow, green, green, yellow, orange, red);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+	  .slider {
+		-webkit-appearance: none;
+		width: 7%;
+		height: 1vw;
+		background-image: linear-gradient(to left, red, orange, yellow, green, green, yellow, orange, red);
+		outline: none;
+		opacity: 1;
+		-webkit-transition: .2s;
+		transition: opacity .2s;
+		}
+
+    </style>
 </head>
 <body style = "background-color: #2e2e2e; color: white;">
 
@@ -78,9 +99,9 @@ if(Money<=10 || Money>90 || Fame<=10 || Fame>90 || Power<=10 || Power>90){
 }
 
 function valueUpdate(){
-	document.getElementById("pMoney").innerHTML = mString+" "+Money;
-	document.getElementById("pFame").innerHTML = fString+" "+Fame;
-	document.getElementById("pPower").innerHTML = pString+" "+Power;
+	document.getElementById("pMoney").innerHTML = mString+" "+healthBar(Money)+" "+Money;
+	document.getElementById("pFame").innerHTML = fString+" "+healthBar(Fame)+" "+Fame;
+	document.getElementById("pPower").innerHTML = pString+" "+healthBar(Power)+" "+Power;
 	document.getElementById("pScore").innerHTML = sString+" "+Score+" x"+ScoreMultiplier;
 }
 
@@ -90,6 +111,7 @@ function yesFunc() {
 	Power += (Math.floor(Math.random()*11));
 	scoreMan();
 	gameTick();
+	
 }
 function noFunc() {
 	Money -= (Math.floor(Math.random()*21));
@@ -99,6 +121,7 @@ function noFunc() {
 	gameTick();
 }
 
+<!--Unused Code-->
 function boncheckFunc() {
 	if(Math.floor(Math.random()*2)) {
 		document.getElementById("bonusButton").disabled = 0
@@ -106,6 +129,7 @@ function boncheckFunc() {
 	}
 }
 
+<!--Unused Code-->
 function bonFunc() {
 	Money += (Math.floor(Math.random()*(50-Money)));
 	Fame += (Math.floor(Math.random()*(50-Fame)));
@@ -117,10 +141,22 @@ function bonFunc() {
 function randStart(){
 	document.getElementById("Heading").innerHTML = headString;
 	document.getElementById("Banner").innerHTML = bannerString;
-	Money = (Math.floor(Math.random()*80)) + 5;
-	Fame = (Math.floor(Math.random()*80)) + 5;
-	Power = (Math.floor(Math.random()*80)) + 5;
+	Money = (Math.floor(Math.random()*70)) + 10;
+	Fame = (Math.floor(Math.random()*70)) + 10;
+	Power = (Math.floor(Math.random()*70)) + 10;
 	valueUpdate();
+}
+
+function healthBar(value) {
+let healthBarString = "████████";
+let position = ((value*(healthBarString.length))/100)+0.5;
+let output = [healthBarString.slice(0, position), "|", healthBarString.slice(position)].join('');
+return '<span class="healthbartext">'+" "+output+'</span>'
+}
+
+<!--Unused Code-->
+function hBar(val) {
+return '<input type="range" min="1" max="100" [value=val] class="slider"></input>';
 }
 </script>
 
