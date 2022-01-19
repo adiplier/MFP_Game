@@ -79,6 +79,7 @@
 	</div>
 	
 	<div id="divReload" style="display: none;">
+		<p>Your Score is <span id="spanGOScore"></span></p>
 		<button id="buttonRe" onclick="location.reload()" style ="font-size: 30vh; background-color: #2e2e2e;">&#10227;</button>
 	</div>
 	
@@ -141,6 +142,7 @@ if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
 	document.getElementById("pMoney").innerHTML = "Game";
 	document.getElementById("pFame").innerHTML = "Over ";
 	document.getElementById("pPower").innerHTML = "Please Refresh Page ";
+	document.getElementById("spanGOScore").innerHTML = Score;
 	document.getElementById("divReload").style.display = "block";
 	document.getElementById("buttonIdiotre").style.display = "block";
 	document.getElementById("buttonYes").style.display = "none";
