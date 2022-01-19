@@ -26,25 +26,82 @@
 		-webkit-transition: .2s;
 		transition: opacity .2s;
 		}
+	 .navbar {
+		overflow: hidden;
+		background-color: #333;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		}
 
+	 .navbar a {
+		float: left;
+		display: block;
+		color: #f2f2f2;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 17px;
+		}
+
+	 .navbar a:hover {
+		background: #f1f1f1;
+		color: black;
+		}
+
+	 .navbar a.active {
+		background-color: #04AA6D;
+		color: white;
+		}
+	
     </style>
 </head>
 <body style = "background-color: #2e2e2e; color: white;">
 
-<div style ="text-align: center">
+<div id="divBase" style ="text-align: center">
+	
 	<h1 id ="Heading"></h1>
 	
-	<p id ="Banner"></p>
+	<div id="divMain">
+		
+		<p id ="pBanner"></p>
+		
+		<p id="pMoney"></p>
+		<p id="pFame"></p>
+		<p id="pPower"></p>
+		<p id="pScore"></p>
 
-	<p id="pMoney"></p>
-	<p id="pFame"></p>
-	<p id="pPower"></p>
-	<p id="pScore"></p>
-
-	<!--<button id="bonusButton" onclick="bonFunc()" style ="font-size: 20vh; background-color: #2e2e2e;">&#127873;</button>-->
-	<button id="yesButton" onclick="yesFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128077;</button>
-	<button id="noButton" onclick="noFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128078;</button>
+		<!--<button id="bonusButton" onclick="bonFunc()" style ="font-size: 20vh; background-color: #2e2e2e;">&#127873;</button>-->
+		<button id="buttonYes" onclick="yesFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128077;</button>
+		<button id="buttonNo" onclick="noFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128078;</button>
+		<button id="buttonIdiotre" onclick="location.reload()" style ="font-size: 18vh; background-color: #2e2e2e; display: none; text-align: center;">&#128472;</button>
+		
+	</div>
 	
+	<div id="divReload" style="display: none;">
+		<button id="buttonRe" onclick="location.reload()" style ="font-size: 30vh; background-color: #2e2e2e;">&#128472;</button>
+	</div>
+	
+	<div id="divInventory" style="display: none;">
+		Inventory
+	</div>
+	
+	<div id="divStore" style="display: none; align-items:center;">
+		Store
+	</div>
+	
+	<div id="divHighScore" style="display: none;">
+		High Scores
+	</div>
+	
+	
+	
+	<nav class="navbar">
+				<p><a href="javascript:void(0);" onclick="drawHome()">Home</a></p>
+				<p><a href="javascript:void(0);" onclick="drawInventory()">Inventory</a></p>
+				<p><a href="javascript:void(0);" onclick="drawStore()">Store</a></p>
+				<p><a href="javascript:void(0);" onclick="drawHighScore()">High Scores</a></p>		
+	</nav>
 </div>
 
 <script>
@@ -54,16 +111,16 @@ var Power = 50;
 var Score = 0;
 var ScoreMultiplier = 1;
 
-var headString = "MFP Game";
-var bannerString = "Click Yes &#128077; for a random increase and No &#128078; for a random decrease. You lose if the values go beyond 0-100. Playing on the edge gives more score and multipliers";
-var mString = "Money";
-var fString = "Fame";
-var pString = "Power";
-var sString = "Score";
+var stringHead = "MFP Game";
+var stringBanner = "Click Yes &#128077; for a random increase and No &#128078; for a random decrease. You lose if the values go beyond 0-100. Playing on the edge gives more score and multipliers";
+var stringMoney = "Money";
+var stringFame = "Fame";
+var stringPower = "Power";
+var stringScore = "Score";
 var bobuttIcon = ["&#128176;", "&#10024;", "&#127873;"];
 
-var audBruh = new Audio("https://www.myinstants.com/media/sounds/movie_1.mp3");
-var audClose = new Audio("https://www.myinstants.com/media/sounds/vine-boom.mp3");
+var audGameOver = new Audio("https://www.myinstants.com/media/sounds/police-beep_9oJ6wCU.mp3");
+var audClose = new Audio("https://www.myinstants.com/media/sounds/short-beep.mp3");
 
 window.onload = randStart();
 
@@ -79,13 +136,17 @@ function scoreMan() {
 }
 function lossCheck(){
 if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
-	document.getElementById("yesButton").disabled = 1
-	document.getElementById("noButton").disabled = 1
+	document.getElementById("buttonYes").disabled = 1
+	document.getElementById("buttonNo").disabled = 1
 	document.getElementById("pMoney").innerHTML = "Game";
 	document.getElementById("pFame").innerHTML = "Over ";
 	document.getElementById("pPower").innerHTML = "Please Refresh Page ";
-	audBruh.play();
-	<!--setTimeout(() => {location.reload()}, 1000);-->
+	document.getElementById("divReload").style.display = "block";
+	document.getElementById("buttonIdiotre").style.display = "block";
+	document.getElementById("buttonYes").style.display = "none";
+	document.getElementById("buttonNo").style.display = "none";
+	document.getElementById("divMain").style.display = "none";
+	audGameOver.play();
 	}
 }
 
@@ -99,10 +160,10 @@ if(Money<=10 || Money>90 || Fame<=10 || Fame>90 || Power<=10 || Power>90){
 }
 
 function valueUpdate(){
-	document.getElementById("pMoney").innerHTML = mString+" "+healthBar(Money)+" "+Money;
-	document.getElementById("pFame").innerHTML = fString+" "+healthBar(Fame)+" "+Fame;
-	document.getElementById("pPower").innerHTML = pString+" "+healthBar(Power)+" "+Power;
-	document.getElementById("pScore").innerHTML = sString+" "+Score+" x"+ScoreMultiplier;
+	document.getElementById("pMoney").innerHTML = stringMoney+" "+healthBar(Money)+" "+Money;
+	document.getElementById("pFame").innerHTML = stringFame+" "+healthBar(Fame)+" "+Fame;
+	document.getElementById("pPower").innerHTML = stringPower+" "+healthBar(Power)+" "+Power;
+	document.getElementById("pScore").innerHTML = stringScore+" "+Score+" x"+ScoreMultiplier;
 }
 
 function yesFunc() {
@@ -139,8 +200,8 @@ function bonFunc() {
 }
 
 function randStart(){
-	document.getElementById("Heading").innerHTML = headString;
-	document.getElementById("Banner").innerHTML = bannerString;
+	document.getElementById("Heading").innerHTML = stringHead;
+	document.getElementById("pBanner").innerHTML = stringBanner;
 	Money = (Math.floor(Math.random()*70)) + 10;
 	Fame = (Math.floor(Math.random()*70)) + 10;
 	Power = (Math.floor(Math.random()*70)) + 10;
@@ -148,10 +209,41 @@ function randStart(){
 }
 
 function healthBar(value) {
-let healthBarString = "████████";
-let position = ((value*(healthBarString.length))/100)+0.5;
-let output = [healthBarString.slice(0, position), "|", healthBarString.slice(position)].join('');
-return '<span class="healthbartext">'+" "+output+'</span>'
+	let stringHealthbar = "████████";
+	let position = ((value*(stringHealthbar.length))/100)+0.5;
+	let output = [stringHealthbar.slice(0, position), "|", stringHealthbar.slice(position)].join('');
+	return '<span class="healthbartext">'+" "+output+'</span>'
+}
+
+function hideDiv(){
+	var divs = document.getElementsByTagName("div");
+	
+	for (var i = 0; i < divs.length; i++) {
+		divs[i].style.display = 'none';        
+	}
+	document.getElementById("divBase").style.display = "block";
+}
+
+function drawHome(){
+	hideDiv();
+	document.getElementById("divMain").style.display = "block";
+}
+
+function drawInventory(){
+	hideDiv();
+	document.getElementById("divInventory").style.display = "block";
+}
+
+function drawStore(){
+	hideDiv();
+	document.getElementById("divStore").style.display = "block";
+	document.getElementById("divBarone").style.display = "block";
+	document.getElementById("divBartwo").style.display = "block";
+}
+
+function drawHighScore(){
+	hideDiv();
+	document.getElementById("divHighScore").style.display = "block";
 }
 
 <!--Unused Code-->
