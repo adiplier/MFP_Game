@@ -53,6 +53,9 @@
 		background-color: #04AA6D;
 		color: white;
 		}
+		
+	 .classhide {
+	 }
 	
     </style>
 </head>
@@ -62,7 +65,7 @@
 	
 	<h1 id ="Heading"></h1>
 	
-	<div id="divMain">
+	<div id="divMain" class="classhide">
 		
 		<p id ="pBanner"></p>
 		
@@ -74,24 +77,24 @@
 		<!--<button id="bonusButton" onclick="bonFunc()" style ="font-size: 20vh; background-color: #2e2e2e;">&#127873;</button>-->
 		<button id="buttonYes" onclick="yesFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128077;</button>
 		<button id="buttonNo" onclick="noFunc()" style ="font-size: 18vh; background-color: #2e2e2e;">&#128078;</button>
-		<button id="buttonIdiotre" onclick="location.reload()" style ="font-size: 18vh; background-color: #2e2e2e; display: none; text-align: center;">&#128472;</button>
+		<button id="buttonIdiotre" onclick="location.reload()" style ="font-size: 18vh; background-color: #2e2e2e; display: none; text-align: center;">&#10227;</button>
 		
 	</div>
 	
-	<div id="divReload" style="display: none;">
+	<div id="divReload" style="display: none;" class="classhide">
 		<p>Your Score is <span id="spanGOScore"></span></p>
-		<button id="buttonRe" onclick="location.reload()" style ="font-size: 30vh; background-color: #2e2e2e;">&#10227;</button>
+		<button id="buttonRe" onclick="reInit()" style ="font-size: 30vh; background-color: #2e2e2e;">&#10227;</button>
 	</div>
 	
-	<div id="divInventory" style="display: none;">
+	<div id="divInventory" style="display: none;" class="classhide">
 		Inventory
 	</div>
 	
-	<div id="divStore" style="display: none; align-items:center;">
+	<div id="divStore" style="display: none; align-items:center;" class="classhide">
 		Store
 	</div>
 	
-	<div id="divHighScore" style="display: none;">
+	<div id="divHighScore" style="display: none;" class="classhide">
 		High Scores
 	</div>
 	
@@ -132,19 +135,19 @@ function gameTick(){
 	<!--boncheckFunc(); -->
 }
 
-function scoreMan() {
+function scoreMan(){
 	Score += ((Math.abs(Math.floor((50-Money)/10))) + (Math.abs(Math.floor((50-Fame)/10))) + (Math.abs(Math.floor((50-Power)/10))))*ScoreMultiplier;
 }
 function lossCheck(){
 if(Money<=0 || Money>99 || Fame<=0 || Fame>99 || Power<=0 || Power>99){
-	document.getElementById("buttonYes").disabled = 1
-	document.getElementById("buttonNo").disabled = 1
+	document.getElementById("buttonYes").disabled = 1;
+	document.getElementById("buttonNo").disabled = 1;
 	document.getElementById("pMoney").innerHTML = "Game";
 	document.getElementById("pFame").innerHTML = "Over ";
 	document.getElementById("pPower").innerHTML = "Please Refresh Page ";
 	document.getElementById("spanGOScore").innerHTML = Score;
 	document.getElementById("divReload").style.display = "block";
-	document.getElementById("buttonIdiotre").style.display = "block";
+	document.getElementById("buttonIdiotre").style.display = "initial";
 	document.getElementById("buttonYes").style.display = "none";
 	document.getElementById("buttonNo").style.display = "none";
 	document.getElementById("divMain").style.display = "none";
@@ -168,7 +171,7 @@ function valueUpdate(){
 	document.getElementById("pScore").innerHTML = stringScore+" "+Score+" x"+ScoreMultiplier;
 }
 
-function yesFunc() {
+function yesFunc(){
 	Money += (Math.floor(Math.random()*16));
 	Fame += (Math.floor(Math.random()*22));
 	Power += (Math.floor(Math.random()*11));
@@ -176,7 +179,7 @@ function yesFunc() {
 	gameTick();
 	
 }
-function noFunc() {
+function noFunc(){
 	Money -= (Math.floor(Math.random()*21));
 	Fame -= (Math.floor(Math.random()*27));
 	Power -= (Math.floor(Math.random()*13));
@@ -185,7 +188,7 @@ function noFunc() {
 }
 
 <!--Unused Code-->
-function boncheckFunc() {
+function boncheckFunc(){
 	if(Math.floor(Math.random()*2)) {
 		document.getElementById("bonusButton").disabled = 0
 		document.getElementById("bonusButton").innerHTML = bobuttIcon[(Math.floor(Math.random()*2))];
@@ -193,7 +196,7 @@ function boncheckFunc() {
 }
 
 <!--Unused Code-->
-function bonFunc() {
+function bonFunc(){
 	Money += (Math.floor(Math.random()*(50-Money)));
 	Fame += (Math.floor(Math.random()*(50-Fame)));
 	Power += (Math.floor(Math.random()*(50-Power)));
@@ -210,20 +213,34 @@ function randStart(){
 	valueUpdate();
 }
 
-function healthBar(value) {
+function healthBar(value){
 	let stringHealthbar = "████████";
 	let position = ((value*(stringHealthbar.length))/100)+0.5;
 	let output = [stringHealthbar.slice(0, position), "|", stringHealthbar.slice(position)].join('');
 	return '<span class="healthbartext">'+" "+output+'</span>'
 }
 
+function reInit(){
+	Score = 0;
+	ScoreMultiplier = 1;
+	randStart();
+	drawHome();
+	document.getElementById("buttonYes").disabled = 0;
+	document.getElementById("buttonNo").disabled = 0;
+	document.getElementById("buttonYes").style.display = "initial";
+	document.getElementById("buttonNo").style.display = "initial";
+	document.getElementById("buttonIdiotre").style.display = "none";
+	
+}
+
+<!--Hides divs where class includes "classhide"-->
 function hideDiv(){
-	var divs = document.getElementsByTagName("div");
+	<!--var divs = document.getElementsByTagName("div");-->
+	var divs = document.querySelectorAll("div.classhide");
 	
 	for (var i = 0; i < divs.length; i++) {
 		divs[i].style.display = 'none';        
 	}
-	document.getElementById("divBase").style.display = "block";
 }
 
 function drawHome(){
@@ -239,8 +256,6 @@ function drawInventory(){
 function drawStore(){
 	hideDiv();
 	document.getElementById("divStore").style.display = "block";
-	document.getElementById("divBarone").style.display = "block";
-	document.getElementById("divBartwo").style.display = "block";
 }
 
 function drawHighScore(){
